@@ -17,7 +17,6 @@ window.onload=function(){
 				$(this).css({
 					color: '#8EC2F5'
 				});
-
 			}
 		})
 		.bind('keyup',function(event) {
@@ -52,7 +51,8 @@ window.onload=function(){
 }
 function loadData(){
 	$('ul').children('li').remove();
-	$.getJSON("/resource/bookmarks.json",function(content,status){
+	$.getJSON("./resource/bookmarks.json",function(content,status){
+	//$.getJSON("https://github.com/sunyanan891114/homework4/blob/gh-pages/resource/bookmarks.json",function(content,status){
 		for(var i in content){
 			$(".list").append("<li><div class='list_content'>"
 				+ content[i]["title"]+"</div><div class='list_time'>@created &nbsp"
@@ -67,9 +67,6 @@ function  formatDate(d){
   	return new Date(parseInt(d) * 1000).toLocaleString()
   			.replace(regS, "-")
   			.match(regD);
-}
-function highlight(keywords){
-
 }
 
 
