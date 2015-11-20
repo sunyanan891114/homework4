@@ -26,11 +26,17 @@ window.onload=function(){
             var keywords = this.value;
             highlight(keywords);
         })
-        .bind('change', function(event) {
+        .bind('paste',function(e) {
             $(this).css({
                     color: '#4499ee'
                 });
-            var keywords = this.value;
+            var keywords = undefined;;
+            if (window.clipboardData && window.clipboardData.getData) { // IE
+            keywords = window.clipboardData.getData('Text');
+          } else {
+            keywords = e.originalEvent.clipboardData.getData('Text');//e.clipboardData.getData('text/plain');
+          }
+
             highlight(keywords);
         });
 }
@@ -63,11 +69,10 @@ function highlight(keywords){
             });
             if(this.value !=""){
                 var keywordRE = new RegExp("(" + keywords + ")", "ig");
-                console.log("当前关键字为"+this.value);
+                console.log("当前关键字为"+keywords);
                 $(".list_content").each(function(){ 
                     var text = this.innerHTML.toLocaleString();             
                     if(text.match(keywordRE)){
-                        console.log(text);
                         var highlightedText = text.replace(keywordRE, "<span class='highlight'>$1</span>");                         
                         this.innerHTML = highlightedText;
                         var $li = $(this).parent("li").show();
